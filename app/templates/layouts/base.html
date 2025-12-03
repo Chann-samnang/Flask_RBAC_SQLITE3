@@ -51,20 +51,24 @@
             </li>
 
             <!-- Auth section -->
-            {% if current_user.is_authenticated %}
-            <li class="nav-item">
-              <span class="navbar-text me-3"
-                >Logged in as {{ current_user.username }}</span
-              >
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="{{ url_for('auth.logout') }}">Logout</a>
-            </li>
-            {% else %}
-            <li class="nav-item">
-              <a class="nav-link" href="{{ url_for('auth.login') }}">Login</a>
-            </li>
-            {% endif %}
+            <ul class="navbar-nav ms-auto">
+              {% if current_user.is_authenticated %}
+              <li class="nav-item">
+                <span class="navbar-text me-3"
+                  >Logged in as {{ current_user.username }}</span
+                >
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="{{ url_for('auth.logout') }}"
+                  >Logout</a
+                >
+              </li>
+              {% else %}
+              <li class="nav-item">
+                <a class="nav-link" href="{{ url_for('auth.login') }}">Login</a>
+              </li>
+              {% endif %}
+            </ul>
           </ul>
         </div>
       </div>

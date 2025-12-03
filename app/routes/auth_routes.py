@@ -13,7 +13,7 @@ def login():
         if user and user.check_password(form.password.data):
             login_user(user, remember=form.remember.data)
             flash(f"Welcome back, {user.username}!", "success")
-            next_page = request.args.get("next") or url_for("auth.profile")
+            next_page = request.args.get("next") or url_for("users.index")
             return redirect(next_page)
         else:
             flash("Invalid username or password.", "danger")
@@ -25,11 +25,6 @@ def logout():
     logout_user()
     flash("You have been logged out.", "info")
     return redirect(url_for("auth.login"))
-
-@auth_bp.route("/profile")
-@login_required
-def profile():
-    return render_template("auth/profile.html", user=current_user)
 
 @auth_bp.route("/forgot-password", methods=["GET", "POST"])
 def forgot_password():
