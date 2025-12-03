@@ -1,0 +1,58 @@
+{% extends "layouts/base.html" %} {% block title %}Permissions{% endblock %} {%
+block content %}
+<h3 class="mb-3">Permissions</h3>
+
+<div class="mb-3 text-end">
+  <a href="{{ url_for('permissions.create') }}" class="btn btn-primary"
+    >Create Permission</a
+  >
+</div>
+
+{% if permissions %}
+<div class="table-responsive">
+  <table class="table table-bordered table-striped align-middle">
+    <thead>
+      <tr>
+        <th>#</th>
+        <th>Code</th>
+        <th>Name</th>
+        <th>Module</th>
+        <th>Description</th>
+        <th># Roles</th>
+        <th class="text-end">Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for perm in permissions %}
+      <tr>
+        <td>{{ loop.index }}</td>
+        <td>{{ perm.code }}</td>
+        <td>{{ perm.name }}</td>
+        <td>{{ perm.module }}</td>
+        <td>{{ perm.description or "—" }}</td>
+        <td>{{ perm.roles|length }}</td>
+        <td class="text-end">
+          <a
+            href="{{ url_for('permissions.detail', permission_id=perm.id) }}"
+            class="btn btn-sm btn-outline-primary"
+            >🔍</a
+          >
+          <a
+            href="{{ url_for('permissions.edit', permission_id=perm.id) }}"
+            class="btn btn-sm btn-outline-secondary"
+            >✏️</a
+          >
+          <a
+            href="{{ url_for('permissions.delete_confirm', permission_id=perm.id) }}"
+            class="btn btn-sm btn-outline-danger"
+            >🗑️</a
+          >
+        </td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+{% else %}
+<div class="alert alert-info">No permissions found.</div>
+{% endif %} {% endblock %}

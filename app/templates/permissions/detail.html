@@ -1,0 +1,51 @@
+{% extends "layouts/base.html" %} {% block title %}Permission: {{
+permission.code }}{% endblock %} {% block content %}
+<div class="d-flex justify-content-between align-items-center mb-3">
+  <h3 class="mb-0">Permission Detail</h3>
+  <div>
+    <a
+      href="{{ url_for('permissions.edit', permission_id=permission.id) }}"
+      class="btn btn-sm btn-outline-secondary"
+      >Edit</a
+    >
+    <a
+      href="{{ url_for('permissions.index') }}"
+      class="btn btn-sm btn-outline-primary"
+      >Back to list</a
+    >
+  </div>
+</div>
+
+<dl class="row">
+  <dt class="col-sm-3">Code</dt>
+  <dd class="col-sm-9">{{ permission.code }}</dd>
+
+  <dt class="col-sm-3">Name</dt>
+  <dd class="col-sm-9">{{ permission.name }}</dd>
+
+  <dt class="col-sm-3">Module</dt>
+  <dd class="col-sm-9">{{ permission.module }}</dd>
+
+  <dt class="col-sm-3">Description</dt>
+  <dd class="col-sm-9">{{ permission.description or "—" }}</dd>
+
+  <dt class="col-sm-3">Roles</dt>
+  <dd class="col-sm-9">
+    {% if permission.roles %}
+    <ul class="list-unstyled">
+      {% for role in permission.roles %}
+      <li>{{ role.name }}</li>
+      {% endfor %}
+    </ul>
+    {% else %}
+    <span class="text-muted">No roles assigned</span>
+    {% endif %}
+  </dd>
+
+  <dt class="col-sm-3">Created</dt>
+  <dd class="col-sm-9">{{ permission.created_at.strftime('%Y-%m-%d') }}</dd>
+
+  <dt class="col-sm-3">Updated</dt>
+  <dd class="col-sm-9">{{ permission.updated_at.strftime('%Y-%m-%d') }}</dd>
+</dl>
+{% endblock %}

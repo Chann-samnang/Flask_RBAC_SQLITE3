@@ -1,0 +1,30 @@
+{% extends "layouts/base.html" %} {% block title %}Delete Role{% endblock %} {%
+block content %}
+<div class="card shadow-sm">
+  <div class="card-body">
+    <h3 class="text-danger">Confirm Delete</h3>
+    <p class="mt-3">Are you sure you want to delete this role?</p>
+
+    <ul class="list-group mb-3">
+      <li class="list-group-item"><strong>Name:</strong> {{ role.name }}</li>
+      <li class="list-group-item">
+        <strong>Description:</strong> {{ role.description or "—" }}
+      </li>
+      <li class="list-group-item">
+        <strong># Permissions:</strong> {{ role.permissions|length }}
+      </li>
+      <li class="list-group-item">
+        <strong># Users:</strong> {{ role.users|length }}
+      </li>
+    </ul>
+
+    <form method="post" action="{{ url_for('roles.delete', role_id=role.id) }}">
+      {{ form.hidden_tag() }}
+      <button type="submit" class="btn btn-danger">Delete</button>
+      <a href="{{ url_for('roles.index') }}" class="btn btn-secondary"
+        >Cancel</a
+      >
+    </form>
+  </div>
+</div>
+{% endblock %}

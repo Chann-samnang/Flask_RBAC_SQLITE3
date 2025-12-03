@@ -1,0 +1,71 @@
+{{ form.hidden_tag() }}
+
+<!-- Role Name -->
+<div class="mb-3">
+  {{ form.name.label(class="form-label") }} {{ form.name(class="form-control",
+  placeholder="Role name") }} {% if form.name.errors %}
+  <div class="text-danger small">
+    {% for error in form.name.errors %}
+    <div>{{ error }}</div>
+    {% endfor %}
+  </div>
+  {% endif %}
+</div>
+
+<!-- Description -->
+<div class="mb-3">
+  {{ form.description.label(class="form-label") }} {{
+  form.description(class="form-control", placeholder="Short description
+  (optional)") }} {% if form.description.errors %}
+  <div class="text-danger small">
+    {% for error in form.description.errors %}
+    <div>{{ error }}</div>
+    {% endfor %}
+  </div>
+  {% endif %}
+</div>
+
+<div class="mb-3">
+  <label class="form-label">Permissions</label>
+  {% set grouped = {} %} {% for perm in form.permissions.choices %} {% set
+  module = perm[0].split('.')[0] %} {% if module not in grouped %} {% set _ =
+  grouped.update({module: []}) %} {% endif %} {% set _ =
+  grouped[module].append(perm) %} {% endfor %} {% for module, perms in
+  grouped.items() %}
+  <div class="mb-2">
+    <strong>{{ module|upper }}</strong>
+    <div class="row">
+      {% for perm in perms %}
+      <div class="col-md-6">
+        <div class="form-check">
+          <input
+            class="form-check-input"
+            type="checkbox"
+            name="{{ form.permissions.name }}"
+            value="{{ perm[0] }}"
+            id="{{ perm[0] }}"
+            {%
+            if
+            perm[0]
+            in
+            form.permissions.data
+            %}checked{%
+            endif
+            %} />
+          <label class="form-check-label" for="{{ perm[0] }}">
+            {{ perm[0] }} – {{ perm[1] }}
+          </label>
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+  </div>
+  {% endfor %}
+</div>
+
+<div class="mt-4">
+  {{ form.submit(class="btn btn-primary") }}
+  <a href="{{ url_for('roles.index') }}" class="btn btn-outline-secondary"
+    >Cancel</a
+  >
+</div>
